@@ -9,10 +9,13 @@ class Author(models.Model):
     last_name = models.CharField(max_length=64)
     birthday_year = models.PositiveIntegerField()
 
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
 
 class Biography(models.Model):
     text = models.TextField()
-    author = models.OneToOneField(Author, on_delete=models.on_delete.CASCADE)
+    author = models.OneToOneField(Author, on_delete=models.CASCADE)
 
 
 class Book(models.Model):
@@ -21,4 +24,5 @@ class Book(models.Model):
 
 
 class Article(models.Model):
-    name =
+    name = models.CharField(max_length=32)
+    author = models.ForeignKey(Author, models.PROTECT)
