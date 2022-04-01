@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'users',
     'scripts',
     'corsheaders',
-    'newapp',
+    'notes',
 ]
 
 MIDDLEWARE = [
