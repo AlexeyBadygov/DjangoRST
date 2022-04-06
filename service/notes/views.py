@@ -1,5 +1,5 @@
 from django.db.migrations import serializer
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, status
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -19,16 +19,25 @@ class ProjectModelViewSet(ModelViewSet):
         default_limit = 10
 
 
-class NotesModelViewSet(viewsets.ModelViewSet):
+class NotesModelViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,
+                        mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    renderer_classes = [JSONRenderer]
     queryset = Notes.objects.all()
     serializer_class = NotesModelSerializer
 
-    # def del_queryset(self):
-    #     active = self.request.query_params.get('active')
-    #     notes = Notes.objects.all()
-    #     if active:
-    #             active = False
-    #     return active
+
+class NotesModelViewSet(mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    renderer_classes = [JSONRenderer]
+    queryset = Notes.objects.all()
+    serializer_class = NotesModelSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.active('False')
 
 
 class NotestLimitOffsetPagination(LimitOffsetPagination):
