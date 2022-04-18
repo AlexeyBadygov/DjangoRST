@@ -1,5 +1,6 @@
-from rest_framework import views, viewsets
+from rest_framework import views, viewsets, permissions
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -44,10 +45,11 @@ from rest_framework import mixins
 
 
 class AuthorModelViewSet(ModelViewSet):
+    # permission_classes = [IsAuthenticated]
     # renderer_classes = ['StaticHTMLRender']
     queryset = Author.objects.all()
     serializer_class = SimpleAuthorModelSerializer
-    filter_fields = ['first_name']
+    # filter_fields = ['first_name']
 
 
     # def get_queryset(self):
@@ -59,6 +61,7 @@ class AuthorModelViewSet(ModelViewSet):
 
 
 class BookModelViewSet(ModelViewSet):
+    # permission_classes = [permissions.IsAuthenticated]
     queryset = Book.objects.all()
     serializer_class = BookModelSerializer
 

@@ -6,7 +6,7 @@ import AuthorList from './components/Author.js';
 import UsersList from './components/Users.js';
 import Header from './components/Header.js';
 import Footer from './components/Footer.js';
-import {BrowserRouter, HashRouter, Route, Link} from 'react-router-dom'
+import {BrowserRouter, Route} from 'react-router-dom'
 import BookList from "./components/Book";
 import NoteList from "./components/Notes";
 
