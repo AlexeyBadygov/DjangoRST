@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'users',
     'scripts',
     'corsheaders',
+    'drf_yasg',
     'django_filters',
     'notes',
     'rest_framework.authtoken',
