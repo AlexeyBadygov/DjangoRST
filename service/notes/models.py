@@ -9,11 +9,10 @@ class Project(models.Model):
     link_repo = models.URLField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
 class Notes(models.Model):
     time_created = models.DateTimeField(default=time())
     time_updated = models.DateTimeField(default=time())
     text = models.TextField()
     project = models.OneToOneField(Project, on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
-
-

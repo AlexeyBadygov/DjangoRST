@@ -9,6 +9,9 @@ import {BrowserRouter, Link, Route, Switch} from 'react-router-dom'
 import BookList from "./components/Book";
 import NoteList from "./components/Notes";
 import LoginForm from "./components/Auth";
+import NoteForm from "./components/NoteForm";
+import ProjectList from "./components/Project";
+import ProjectForm from "./components/ProjectForm";
 
 
 const NotFound404 = ({ location }) => {
@@ -102,6 +105,40 @@ class App extends React.Component {
         })
     }
 
+
+    createProject(name, user) {
+        const headers = this.get_headers()
+        const data = {name: name}
+        axios.post('http://127.0.0.1:8000/api/projects/', data, {headers})
+            .then(response => {
+                let newProject = response.data
+                const user = this.state.users.filter(item) => item.id === newProject.user)[0]
+                newProject.user = user
+                this.setState({projects:[... this.state.projects, newProject]})
+            })
+        }
+
+    deleteProject(name, user) {
+       const header = this.get_headers()
+        axios.delete('http://127.0.0.1:8000/api/projects/${id}', {headers})
+            .then(response => {
+                this.setState({projects: this.state.projects.filter((item)=>item.id != id)})
+            }).catch(error => {
+                console.log(error)
+        })
+    }
+
+
+    deleteNote(project) {
+       const header = this.get_headers()
+        axios.delete('http://127.0.0.1:8000/api/notes/${id}', {headers})
+            .then(response => {
+                this.setState({notes: this.state.notes.filter((item)=>item.project != project)})
+            }).catch(error => {
+                console.log(error)
+        })
+    }
+
     componentDidMount() {
         this.get_token_from_storage()
     }
@@ -124,14 +161,19 @@ class App extends React.Component {
                         </ul>
                     </nav>
                     {/*<Switch>*/}
-                    {/*/!*<Header />*!/*/}
+                    <Header />
                         <Route exact path='/authors' component={() => <AuthorList authors={this.state.authors} />} />
                         <Route exact path='/books' component={() => <BookList books={this.state.books} />} />
-                        {/*<Route exact path='/notes' component={() => <NoteList notes={this.state.notes} />} />*/}
+                        <Route exact path='/notes' component={() => <NoteList notes={this.state.notes} />} />
+                        <Route exact path='/notes/create' component={() => <NoteForm notes={this.state.notes} createNote={(project) => this.createNote(project)}/>} />
+                        <Route exact path='/notes/delete' component={() => <NoteForm notes={this.state.notes} deleteNote={(project) => this.deleteNote(project)}/>} />
+                        <Route exact path='/project/' component={() => <ProjectList projects={this.state.projects} />} />
+                        <Route exact path='/project/create' component={() => <ProjectForm projects={this.state.projects} createProject={(name) => this.createProject(name)}/>} />
+                        <Route exact path='/project/delete' component={() => <ProjectForm projects={this.state.projects} deleteProject={(name) => this.deleteProject(name)}/>} />
                         <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)} />} />
                         <Route component={NotFound404} />
                     {/*</Switch>*/}
-                    {/*<Footer />*/}
+                    <Footer />
                 </BrowserRouter>
             </div>
         );

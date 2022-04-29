@@ -37,12 +37,12 @@ router.register('books', BookViewSet)
 # router.register('biography', BiographyViewSet)
 # router.register('articles', ArticleViewSet)
 
-# router_users = DefaultRouter()
-# router.register('users', UsersModelViewSet)
+router_users = DefaultRouter()
+router.register('users', UsersModelViewSet)
 
-# router_notes = DefaultRouter()
-# router.register('project', ProjectModelViewSet)
-# router.register('notes', NotesModelViewSet)
+router_notes = DefaultRouter()
+router.register('project', ProjectModelViewSet)
+router.register('notes', NotesModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
