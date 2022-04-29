@@ -112,17 +112,17 @@ class App extends React.Component {
         axios.post('http://127.0.0.1:8000/api/projects/', data, {headers})
             .then(response => {
                 let newProject = response.data
-                const user = this.state.users.filter(item) => item.id === newProject.user)[0]
+                const user = this.state.users.filter((item) => item.id === newProject.user)[0]
                 newProject.user = user
                 this.setState({projects:[... this.state.projects, newProject]})
             })
         }
 
     deleteProject(name, user) {
-       const header = this.get_headers()
-        axios.delete('http://127.0.0.1:8000/api/projects/${id}', {headers})
+       const headers = this.get_headers()
+        axios.delete('http://127.0.0.1:8000/api/projects/${id}',{headers})
             .then(response => {
-                this.setState({projects: this.state.projects.filter((item)=>item.id != id)})
+                this.setState({projects: this.state.projects.filter((project)=>project.id != project.id)})
             }).catch(error => {
                 console.log(error)
         })
@@ -130,7 +130,7 @@ class App extends React.Component {
 
 
     deleteNote(project) {
-       const header = this.get_headers()
+       const headers = this.get_headers()
         axios.delete('http://127.0.0.1:8000/api/notes/${id}', {headers})
             .then(response => {
                 this.setState({notes: this.state.notes.filter((item)=>item.project != project)})
