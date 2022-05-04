@@ -4,19 +4,8 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from .models import Project, Notes
-from .serializers import ProjectModelSerializer, NotesModelSerializer
-
-
-class ProjectModelViewSet(ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectModelSerializer
-
-    def get_queryset(self):
-        return Project.objects.filter(name__contains='часть_имени_проекта')
-
-    class ProjectLimitOffsetPagination(LimitOffsetPagination):
-        default_limit = 10
+from .models import Notes
+from .serializers import NotesModelSerializer
 
 
 class NotesModelViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,

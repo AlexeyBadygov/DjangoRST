@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'notes',
+    'projects',
     'rest_framework.authtoken',
     'graphene_django',
 ]

@@ -7,7 +7,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
 
     serializer_class = AuthorSerializer
     queryset = Author.objects.all()
-    # filter_fields = ['first_name']
+    filter_fields = ['first_name']
 
 
 class BookViewSet(viewsets.ModelViewSet):

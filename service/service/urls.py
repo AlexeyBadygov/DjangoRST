@@ -7,7 +7,8 @@ from rest_framework.routers import DefaultRouter
 from authors.views import AuthorViewSet, BookViewSet
 from userapp.views import UserListAPIView
 from users.views import UsersModelViewSet
-from notes.views import ProjectModelViewSet, NotesModelViewSet
+from notes.views import NotesModelViewSet
+from projects.views import ProjectModelViewSet
 from rest_framework.authtoken import views
 
 from drf_yasg.views import get_schema_view
@@ -27,21 +28,15 @@ schema_view = get_schema_view(
     # permission_classes=[permissions.AllowAny],
 )
 
-
-
-
-
 router = DefaultRouter()
 router.register('authors', AuthorViewSet)
 router.register('books', BookViewSet)
 # router.register('biography', BiographyViewSet)
 # router.register('articles', ArticleViewSet)
 
-router_users = DefaultRouter()
+# router_users = DefaultRouter()
 router.register('users', UsersModelViewSet)
-
-router_notes = DefaultRouter()
-router.register('project', ProjectModelViewSet)
+router.register('projects', ProjectModelViewSet)
 router.register('notes', NotesModelViewSet)
 
 urlpatterns = [

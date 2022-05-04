@@ -128,6 +128,18 @@ class App extends React.Component {
         })
     }
 
+    createNote(name, user) {
+        const headers = this.get_headers()
+        const data = {name: name}
+        axios.post('http://127.0.0.1:8000/api/notes/', data, {headers})
+            .then(response => {
+            let newProject = response.data
+            const user = this.state.users.filter((item) => item.id === newProject.user)[0]
+            newProject.user = user
+            this.setState({projects:[... this.state.projects, newProject]})
+        })
+    }
+
 
     deleteNote(project) {
        const headers = this.get_headers()
@@ -165,8 +177,8 @@ class App extends React.Component {
                         <Route exact path='/authors' component={() => <AuthorList authors={this.state.authors} />} />
                         <Route exact path='/books' component={() => <BookList books={this.state.books} />} />
                         <Route exact path='/notes' component={() => <NoteList notes={this.state.notes} />} />
-                        <Route exact path='/notes/create' component={() => <NoteForm notes={this.state.notes} createNote={(project) => this.createNote(project)}/>} />
-                        <Route exact path='/notes/delete' component={() => <NoteForm notes={this.state.notes} deleteNote={(project) => this.deleteNote(project)}/>} />
+                        <Route exact path='/notes/create' component={() => <NoteForm notes={this.state.notes} createNote={(note) => this.createNote(note)}/>} />
+                        <Route exact path='/notes/delete' component={() => <NoteForm notes={this.state.notes} deleteNote={(note) => this.deleteNote(note)}/>} />
                         <Route exact path='/project/' component={() => <ProjectList projects={this.state.projects} />} />
                         <Route exact path='/project/create' component={() => <ProjectForm projects={this.state.projects} createProject={(name) => this.createProject(name)}/>} />
                         <Route exact path='/project/delete' component={() => <ProjectForm projects={this.state.projects} deleteProject={(name) => this.deleteProject(name)}/>} />

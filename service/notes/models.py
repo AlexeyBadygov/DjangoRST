@@ -2,12 +2,7 @@ from datetime import time
 from django.db import models
 # from users.models import Users
 from django.contrib.auth.models import User
-
-
-class Project(models.Model):
-    name = models.CharField(max_length=64)
-    link_repo = models.URLField(max_length=200)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+from projects.models import Project
 
 
 class Notes(models.Model):
